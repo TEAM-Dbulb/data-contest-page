@@ -1,0 +1,182 @@
+---
+title: Platform
+layout: page
+permalink: /platform/
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>데이터분석 경진대회/공모전 플랫폼</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.semanticui.min.css">
+  <style>
+    #csvTable_wrapper {
+      overflow-x: auto;
+    }
+    
+    #csvTable_wrapper .dataTables_scroll {
+      overflow: hidden;
+      position: relative;
+      clear: both;
+      width: 100%;
+    }
+    
+    #csvTable_wrapper .dataTables_scrollHead {
+      overflow: hidden;
+      position: relative;
+      top: 0;
+    }
+    
+    #csvTable_wrapper .dataTables_scrollHead table {
+      margin-left: 0;
+    }
+    
+    #csvTable_wrapper .dataTables_scrollBody {
+      overflow: auto;
+      position: relative;
+      width: 100%;
+    }
+    
+    #csvTable_wrapper .dataTables_scrollBody table {
+      margin-left: 0;
+    }
+    
+    #csvTable thead th {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+
+</head>
+<body>
+  <h2><strong>데이터분석 경진대회/공모전 플랫폼</strong></h2>
+  <br><br>
+  <h3>[수시] 데이터분석 경진대회/공모전 플랫폼</h2>
+  <div>
+    <table id="csvTable" class="dataTable no-footer">
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        type: "GET",
+        url: "{{ site.baseurl }}/assets/data_platform.csv", // CSV 파일의 경로
+        dataType: "text",
+        success: function(data) {
+          var lines = data.split("\n");
+          var headers = lines[0].split(","); // 헤더 추출
+          var dataSet = [];
+
+          // 테이블 데이터 생성
+          for (var j = 1; j < lines.length; j++) {
+            var cells = lines[j].split(",");
+            var webpage = '<a href="' + cells[2] + '" target="_blank">' + cells[2] + '</a>';
+            dataSet.push([cells[0], cells[1], webpage]);
+          }
+
+          // DataTables 초기화
+          var table = $('#csvTable').DataTable({
+            data: dataSet,
+            columns: [
+              { title: headers[0] },
+              { title: headers[1] },
+              { title: headers[2] }
+            ],
+            "theme": "semanticui" 
+          });
+
+          // 유형 컬럼 필터링
+          table.column(0).every(function() {
+            var column = this;
+            var select = $('<select><option value="">전체</option></select>')
+              .appendTo($("#csvTable thead tr:eq(0) th:eq(0)"))
+              .on('change', function() {
+                var val = $.fn.dataTable.util.escapeRegex(
+                  $(this).val()
+                );
+
+                column
+                  .search(val ? '^' + val + '$' : '', true, false)
+                  .draw();
+              });
+
+            column.data().unique().sort().each(function(d, j) {
+              select.append('<option value="' + d + '">' + d + '</option>');
+            });
+          });
+        }
+      });
+    });
+  </script>
+  <br><br><br><br>
+  <h3>[정시] 데이터분석 경진대회/공모전 플랫폼</h2>
+    <div>
+      <table id="csvTable_reg" class="dataTable no-footer">
+        <tbody></tbody>
+      </table>
+    </div>
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $.ajax({
+          type: "GET",
+          url: "{{ site.baseurl }}/assets/data_platform_reg.csv", // CSV 파일의 경로
+          dataType: "text",
+          success: function(data) {
+            var lines = data.split("\n");
+            var headers = lines[0].split(","); // 헤더 추출
+            var dataSet = [];
+  
+            // 테이블 데이터 생성
+            for (var j = 1; j < lines.length; j++) {
+              var cells = lines[j].split(",");
+              var webpage = '<a href="' + cells[4] + '" target="_blank">' + cells[4] + '</a>';
+              dataSet.push([cells[0], cells[1], cells[2], cells[3], webpage]);
+            }
+  
+            // DataTables 초기화
+            var table = $('#csvTable_reg').DataTable({
+              data: dataSet,
+              columns: [
+                { title: headers[0] },
+                { title: headers[1] },
+                { title: headers[2] },
+                { title: headers[3] },
+                { title: headers[4] }
+              ],
+              "theme": "semanticui" 
+            });
+  
+            // 유형 컬럼 필터링
+            table.column(0).every(function() {
+              var column = this;
+              var select = $('<select><option value="">전체</option></select>')
+                .appendTo($("#csvTable_reg thead tr:eq(0) th:eq(0)"))
+                .on('change', function() {
+                  var val = $.fn.dataTable.util.escapeRegex(
+                    $(this).val()
+                  );
+  
+                  column
+                    .search(val ? '^' + val + '$' : '', true, false)
+                    .draw();
+                });
+  
+              column.data().unique().sort().each(function(d, j) {
+                select.append('<option value="' + d + '">' + d + '</option>');
+              });
+            });
+          }
+        });
+      });
+    </script>
+</body>
+</html>

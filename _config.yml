@@ -2,9 +2,10 @@ title: Business Frontpage
 description: A business home page starter template for Bootstrap 4 featuring marketing boxes and a full width image header.
 
 # disabled because we are using a custom domain
-#baseurl: /business-frontpage 
+url: https://0525hhgus.github.io # the base hostname & protocol for your site
+baseurl: /data-contest-page/ # the subpath of your site, e.g. /blog/
 
-color-scheme: "mediumseagreen" # the scheme can be any HEX code like "#00aa55"
+color-scheme: "#0f4c81" # the scheme can be any HEX code like "#00aa55"
 
 sass:
   sass_dir: /assets/css/_sass

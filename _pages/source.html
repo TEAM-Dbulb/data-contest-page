@@ -1,11 +1,13 @@
 ---
-layout: default
+title: Source
+layout: page
+permalink: /source/
 ---
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>데이터 분석 경진대회/공모전 일정</title>
+  <title>빅데이터 오픈마켓/수집처 정리</title>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.semanticui.min.css">
   <style>
@@ -49,7 +51,7 @@ layout: default
 
 </head>
 <body>
-  <h2><strong>데이터 분석 경진대회/공모전 일정</strong></h2>
+  <h2><strong>빅데이터 오픈마켓/수집처 정리</strong></h2>
   <div>
     <table id="csvTable" class="dataTable no-footer">
       <tbody></tbody>
@@ -62,7 +64,7 @@ layout: default
     $(document).ready(function() {
       $.ajax({
         type: "GET",
-        url: "{{ site.baseurl }}/assets/data_comp.csv", // CSV 파일의 경로
+        url: "{{ site.baseurl }}/assets/data_source.csv", // CSV 파일의 경로
         dataType: "text",
         success: function(data) {
           var lines = data.split("\n");
@@ -72,12 +74,8 @@ layout: default
           // 테이블 데이터 생성
           for (var j = 1; j < lines.length; j++) {
             var cells = lines[j].split(",");
-            var endDate = new Date(cells[4]); // 종료일 데이터
-            var today = new Date(); // 오늘 날짜
-
-            if (endDate >= today) {
-              dataSet.push([cells[0], cells[1], cells[2], cells[3], cells[4]]);
-            }
+            var webpage = '<a href="' + cells[2] + '" target="_blank">' + cells[2] + '</a>';
+            dataSet.push([cells[0], cells[1], webpage]);
           }
 
           // DataTables 초기화
@@ -86,9 +84,7 @@ layout: default
             columns: [
               { title: headers[0] },
               { title: headers[1] },
-              { title: headers[2], visible: false },
-              { title: headers[3] },
-              { title: headers[4] }
+              { title: headers[2] }
             ],
             "theme": "semanticui" 
           });
@@ -111,31 +107,6 @@ layout: default
             column.data().unique().sort().each(function(d, j) {
               select.append('<option value="' + d + '">' + d + '</option>');
             });
-          });
-
-          // 행 클릭 시 웹페이지 데이터 처리
-          $('#csvTable tbody').on('click', 'tr', function() {
-            if ($(this).next('.webpage-row').length) {
-              // 이미 클릭된 상태인 경우 동일한 행에 대해서 다시 클릭하지 않도록 처리
-              return;
-            }
-
-            var rowData = table.row(this).data();
-            var webpage = rowData[2];
-            var webpageData = $('<a href="' + webpage + '" target="_blank">' + webpage + '</a>');
-            $(this).after('<tr class="webpage-row"><td colspan="5"></td></tr>');
-            $(this).next('.webpage-row').find('td').append(webpageData);
-          });
-
-          // 웹페이지 데이터 클릭 시 이동
-          $('#csvTable').on('click', '.webpage-row div', function(e) {
-            e.stopPropagation();
-            var webpage = $(this).text();
-            if (webpage.includes("http://") || webpage.includes("https://")) {
-              window.open(webpage, '_blank'); // 새 창에서 웹페이지 열기
-            } else {
-              console.log("유효한 웹페이지 링크가 아닙니다.");
-            }
           });
         }
       });
