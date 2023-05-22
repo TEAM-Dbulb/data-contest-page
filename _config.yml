@@ -3,7 +3,7 @@ description: A business home page starter template for Bootstrap 4 featuring mar
 
 # disabled because we are using a custom domain
 url: https://0525hhgus.github.io # the base hostname & protocol for your site
-baseurl: /DATA-CONTEST-PAGE/ # the subpath of your site, e.g. /blog/
+baseurl: /data-contest-page/ # the subpath of your site, e.g. /blog/
 
 color-scheme: "#0f4c81" # the scheme can be any HEX code like "#00aa55"
 
