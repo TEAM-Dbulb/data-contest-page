@@ -1,14 +1,12 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand js-scroll-trigger" href="{{ site.baseurl }}/"
-      >DATA CONTEST</a
-    >
+    <a class="navbar-brand js-scroll-trigger" href="{{ site.baseurl }}/">
+      DATA CONTEST
+    </a>
     <button
       class="navbar-toggler ml-auto"
       type="button"
-      data-toggle="collapse"
-      data-target="#navbarResponsive"
       aria-controls="navbarResponsive"
       aria-expanded="false"
       aria-label="Toggle navigation"
@@ -19,12 +17,29 @@
       <ul class="navbar-nav ml-auto">
         {% for item in site.data.menu %}
         <li class="nav-item{% if item.link == page.url %} active {% endif %}">
-          <a class="nav-link" href="{{ site.baseurl }}{{ item.link }}">{{
-            item.title
-          }}</a>
+          <a class="nav-link" href="{{ site.baseurl }}{{ item.link }}">
+            {{ item.title }}
+          </a>
         </li>
         {% endfor %}
       </ul>
     </div>
   </div>
 </nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var navbarToggler = document.querySelector(".navbar-toggler");
+    var navbarCollapse = document.querySelector(".navbar-collapse");
+
+    navbarToggler.addEventListener("click", function () {
+      if (window.navigator.userAgentData) {
+        if (window.navigator.userAgentData.mobile) {
+          navbarCollapse.classList.toggle("show");
+        }
+      } else {
+        console.warn("navigator.userAgentData is not supported.");
+      }
+    });
+  });
+</script>
