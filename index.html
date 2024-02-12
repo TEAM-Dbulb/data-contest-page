@@ -1,8 +1,104 @@
----
-layout: default
----
-
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+  <meta name="description" content="DATA CONTEST" />
+  <meta name="author" content="" />
+
+  <title>DATA CONTEST</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/data-contest-page/assets/css/main.css" rel="stylesheet" />
+</head>
+
+
+<body>
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand js-scroll-trigger" href="/data-contest-page/">
+      AI DATA CONTEST
+    </a>
+    <button
+      class="navbar-toggler ml-auto"
+      type="button"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        
+        <li class="nav-item active ">
+          <a class="nav-link" href="/data-contest-page/">
+            Home
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/data-contest-page/about/">
+            About
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/data-contest-page/platform/">
+            Platform
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/data-contest-page/source/">
+            Source
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var navbarToggler = document.querySelector(".navbar-toggler");
+    var navbarCollapse = document.querySelector(".navbar-collapse");
+
+    navbarToggler.addEventListener("click", function () {
+      if (window.navigator.userAgentData) {
+        if (window.navigator.userAgentData.mobile) {
+          navbarCollapse.classList.toggle("show");
+        }
+      } else {
+        console.warn("navigator.userAgentData is not supported.");
+      }
+    });
+  });
+</script>
+ <!-- Header -->
+<header class="bg-primary py-5 mb-5">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-lg-12">
+        <h1 class="display-4 text-white mt-5 mb-2">
+          AI 데이터분석 공모전 정보 공유
+        </h1>
+        <p class="lead mb-5 text-white-50">
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <!-- Page Content -->
+  <div class="container mb-5">
+    <!DOCTYPE html>
 <html>
 <head>
   <title>데이터 분석 경진대회/공모전 일정</title>
@@ -45,6 +141,16 @@ layout: default
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
+    .clicked-cell {
+      background-color: #cccccc; /* 회색 배경 */
+    }
+
+    .highlighted, .highlighted a {
+      background-color: #cccccc !important; /* 회색 배경 */
+      font-weight: bold !important; /* 볼드 처리 */
+    }
+    
   </style>
 
 </head>
@@ -62,7 +168,7 @@ layout: default
     $(document).ready(function() {
       $.ajax({
         type: "GET",
-        url: "{{ site.baseurl }}/assets/data_comp.csv", // CSV 파일의 경로
+        url: "/data-contest-page/assets/data_comp.csv", // CSV 파일의 경로
         dataType: "text",
         success: function(data) {
           var lines = data.split("\n");
@@ -113,20 +219,42 @@ layout: default
             });
           });
 
+          var previouslyHighlighted; // 이전에 하이라이트된 행을 추적
           // 행 클릭 시 웹페이지 데이터 처리
+          // 행 클릭 시 웹페이지 데이터 처리 로직 개선
           $('#csvTable tbody').on('click', 'tr', function() {
-            if ($(this).next('.webpage-row').length) {
-              // 이미 클릭된 상태인 경우 동일한 행에 대해서 다시 클릭하지 않도록 처리
-              return;
+            var tr = $(this); // 클릭된 행
+            var row = table.row(tr);
+
+                // 이전에 하이라이트된 행의 스타일 초기화
+            if (previouslyHighlighted) {
+              previouslyHighlighted.removeClass('highlighted');
+              if (previouslyHighlighted.next('.webpage-row').length) {
+                previouslyHighlighted.next('.webpage-row').removeClass('highlighted');
+              }
             }
 
-            var rowData = table.row(this).data();
-            var webpage = rowData[2];
-            var webpageData = $('<a href="' + webpage + '" target="_blank">' + webpage + '</a>');
-            $(this).after('<tr class="webpage-row"><td colspan="5"></td></tr>');
-            $(this).next('.webpage-row').find('td').append(webpageData);
+            // 이미 확장된 행이 있는지 확인
+            if (row.child.isShown()) {
+              // 링크 행이 이미 표시된 경우, 숨김
+              row.child.hide();
+              tr.removeClass('highlighted');
+            } else {
+              // 링크 행이 숨겨진 경우, 표시
+              var rowData = row.data();
+              var linkHtml = '<a href="' + rowData[2] + '" target="_blank">' + rowData[2] + '</a>';
+              row.child(linkHtml).show();
+              tr.addClass('highlighted').next().addClass('highlighted'); // 현재 행과 링크 행에 스타일 적용
+            }
           });
 
+          // 현재 행을 이전에 하이라이트된 행으로 설정
+          previouslyHighlighted = tr;
+
+            // 클릭한 셀에 회색 배경 적용
+          $('#csvTable tbody').on('click', 'td', function() {
+            $(this).toggleClass('clicked-cell');
+          });
           // 웹페이지 데이터 클릭 시 이동
           $('#csvTable').on('click', '.webpage-row div', function(e) {
             e.stopPropagation();
@@ -142,4 +270,26 @@ layout: default
     });
   </script>
 </body>
+</html>
+
+  </div>
+  <!-- /.container -->
+  <!-- Footer -->
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">
+      Copyright &copy; AI DATA CONTEST 2023
+    </p>
+  </div>
+  <!-- /.container -->
+</footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/data-contest-page/assets/vendor/jquery/jquery.min.js"></script>
+  <!-- <script src="/data-contest-page/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+</body>
+
 </html>
