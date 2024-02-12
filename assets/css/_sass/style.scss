@@ -1,10 +1,181 @@
 .navbar {
   padding: 0;
+
   @include media-query($on-palm) {
     padding: 0.5rem 1rem;
   }
 }
 
 .tall-nav {
-  padding: 1rem 1rem;
+  padding: 1rem;
 }
+
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate {
+  display: flex;
+  align-items: center;
+
+  label {
+    white-space: nowrap; // "Show 100 entries"를 한 줄에 표시하는 데 중요
+  }
+}
+
+#csvTable_wrapper,
+#csvTable_reg_wrapper {
+  overflow-x: auto;
+
+  .dataTables_scroll {
+    overflow: hidden;
+    position: relative;
+    clear: both;
+    width: 100%;
+  }
+
+  .dataTables_scrollHead,
+  .dataTables_scrollBody {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .dataTables_scrollBody {
+    overflow: auto;
+  }
+}
+
+#csvTable thead th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+/* 기본 스타일 */
+.display-4.text-white.mt-5.mb-2 {
+  font-size: 2.5rem; /* 기본 폰트 크기 */
+}
+
+/* 중형 디바이스 (태블릿)에 대한 스타일 */
+@media (max-width: 768px) {
+  .display-4.text-white.mt-5.mb-2 {
+    font-size: 2rem; /* 중형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 소형 디바이스 (대형 스마트폰)에 대한 스타일 */
+@media (max-width: 576px) {
+  .display-4.text-white.mt-5.mb-2 {
+    font-size: 1.5rem; /* 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 매우 소형 디바이스 (소형 스마트폰)에 대한 스타일 */
+@media (max-width: 400px) {
+  .display-4.text-white.mt-5.mb-2 {
+    font-size: 1.25rem; /* 매우 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 기본 스타일 */
+h2 {
+  font-size: 2rem; /* 기본 폰트 크기 */
+}
+
+/* 중형 디바이스 (태블릿)에 대한 스타일 */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.75rem; /* 중형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 소형 디바이스 (대형 스마트폰)에 대한 스타일 */
+@media (max-width: 576px) {
+  h2 {
+    font-size: 1.5rem; /* 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 매우 소형 디바이스 (소형 스마트폰)에 대한 스타일 */
+@media (max-width: 400px) {
+  h2 {
+    font-size: 1.25rem; /* 매우 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 기본 스타일 */
+h3 {
+  font-size: 1.75rem; /* 기본 폰트 크기 */
+}
+
+/* 중형 디바이스 (태블릿)에 대한 스타일 */
+@media (max-width: 768px) {
+  h3 {
+    font-size: 1.5rem; /* 중형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 소형 디바이스 (대형 스마트폰)에 대한 스타일 */
+@media (max-width: 576px) {
+  h3 {
+    font-size: 1.25rem; /* 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 매우 소형 디바이스 (소형 스마트폰)에 대한 스타일 */
+@media (max-width: 400px) {
+  h3 {
+    font-size: 1rem; /* 매우 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+
+/* 기본 스타일 */
+#csvTable_wrapper,
+#csvTable_reg_wrapper {
+  font-size: 1rem; /* 기본 폰트 크기 */
+}
+
+/* 중형 디바이스 (태블릿)에 대한 스타일 */
+@media (max-width: 768px) {
+  #csvTable_wrapper,
+  #csvTable_reg_wrapper {
+    font-size: 0.9rem; /* 중형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 소형 디바이스 (대형 스마트폰)에 대한 스타일 */
+@media (max-width: 576px) {
+  #csvTable_wrapper,
+  #csvTable_reg_wrapper {
+    font-size: 0.8rem; /* 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+/* 매우 소형 디바이스 (소형 스마트폰)에 대한 스타일 */
+@media (max-width: 400px) {
+  #csvTable_wrapper,
+  #csvTable_reg_wrapper {
+    font-size: 0.7rem; /* 매우 소형 디바이스에 대한 폰트 크기 조정 */
+  }
+}
+
+.dataTables_filter {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-between; /* "Search" 텍스트와 검색창 사이에 공간을 균등하게 배분 */
+}
+
+.dataTables_filter label {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; /* "Search" 텍스트가 줄바꿈 되지 않도록 함 */
+}
+
+.dataTables_filter input {
+  margin-left: 0.5rem; /* "Search" 텍스트와 검색창 사이의 간격 */
+  width: auto; /* 검색창의 너비를 자동으로 조정 */
+}
+
