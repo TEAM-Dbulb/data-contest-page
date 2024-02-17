@@ -7,7 +7,7 @@ permalink: /source/
 <!DOCTYPE html>
 <html>
 <head>
-  <title>빅데이터 오픈마켓/수집처 정리</title>
+  <title>&#128218; 빅데이터 오픈마켓/수집처 정리</title>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.semanticui.min.css">
   <style>
@@ -51,7 +51,7 @@ permalink: /source/
 
 </head>
 <body>
-  <h2><strong>빅데이터 오픈마켓/수집처 정리</strong></h2>
+  <h2><strong>&#128218; 빅데이터 오픈마켓/수집처 정리</strong></h2>
   <div>
     <table id="csvTable" class="dataTable no-footer">
       <tbody></tbody>
@@ -89,11 +89,11 @@ permalink: /source/
             "theme": "semanticui" 
           });
 
-          // 유형 컬럼 필터링
+          // 유형 컬럼 필터링 - 콤보박스로 변경
           table.column(0).every(function() {
             var column = this;
-            var select = $('<select><option value="">전체</option></select>')
-              .appendTo($("#csvTable thead tr:eq(0) th:eq(0)"))
+            var select = $('<select><option value="">유형</option></select>') // 텍스트 없는 콤보박스
+              .appendTo($(column.header()).empty())
               .on('change', function() {
                 var val = $.fn.dataTable.util.escapeRegex(
                   $(this).val()

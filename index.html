@@ -9,7 +9,7 @@
   <meta name="description" content="DATA CONTEST" />
   <meta name="author" content="" />
 
-  <title>DATA CONTEST</title>
+  <title>&#127942; AI DATA CONTEST</title>
 
   <!-- Bootstrap core CSS -->
   <link href="/data-contest-page/assets/css/main.css" rel="stylesheet" />
@@ -21,7 +21,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand js-scroll-trigger" href="/data-contest-page/">
-      AI DATA CONTEST
+      &#127942; AI DATA CONTEST
     </a>
     <button
       class="navbar-toggler ml-auto"
@@ -86,7 +86,7 @@
     <div class="row h-100 align-items-center">
       <div class="col-lg-12">
         <h1 class="display-4 text-white mt-5 mb-2">
-          AI 데이터분석 공모전 정보 공유
+          &#128202; AI 데이터분석 공모전 정보 공유
         </h1>
         <p class="lead mb-5 text-white-50">
           
@@ -101,7 +101,7 @@
     <!DOCTYPE html>
 <html>
 <head>
-  <title>데이터 분석 경진대회/공모전 일정</title>
+  <title>&#128198; 데이터 분석 경진대회/공모전 일정</title>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.semanticui.min.css">
   <style>
@@ -143,19 +143,24 @@
     }
 
     .clicked-cell {
-      background-color: #cccccc; /* 회색 배경 */
+      background-color: #4B61A6; /* 배경 */
+      color: #ffffff; /* 폰트 색상을 흰색으로 설정 */
     }
 
-    .highlighted, .highlighted a {
-      background-color: #cccccc !important; /* 회색 배경 */
+    .highlighted {
+      background-color: #4B61A6 !important; /* 배경 */
+      color: #ffffff !important; /* 폰트 색상을 흰색으로 설정 */
       font-weight: bold !important; /* 볼드 처리 */
     }
-    
+    .highlighted a {
+      background-color: #4B61A6 !important; /* 배경 */
+      color: #B3ADD9 !important; 
+    }
   </style>
 
 </head>
 <body>
-  <h2><strong>데이터 분석 경진대회/공모전 일정</strong></h2>
+  <h2><strong>&#128198; 데이터 분석 경진대회/공모전 일정</strong></h2>
   <div>
     <table id="csvTable" class="dataTable no-footer">
       <tbody></tbody>
@@ -190,20 +195,20 @@
           var table = $('#csvTable').DataTable({
             data: dataSet,
             columns: [
-              { title: headers[0] },
-              { title: headers[1] },
+              { title: headers[0]},
+              { title: headers[1]},
               { title: headers[2], visible: false },
-              { title: headers[3] },
-              { title: headers[4] }
+              { title: headers[3], visible: false },
+              { title: headers[4]}
             ],
             "theme": "semanticui" 
           });
 
-          // 유형 컬럼 필터링
+          // 유형 컬럼 필터링 - 콤보박스로 변경
           table.column(0).every(function() {
             var column = this;
-            var select = $('<select><option value="">전체</option></select>')
-              .appendTo($("#csvTable thead tr:eq(0) th:eq(0)"))
+            var select = $('<select><option value="">유형</option></select>') // 텍스트 없는 콤보박스
+              .appendTo($(column.header()).empty())
               .on('change', function() {
                 var val = $.fn.dataTable.util.escapeRegex(
                   $(this).val()
@@ -220,7 +225,6 @@
           });
 
           var previouslyHighlighted; // 이전에 하이라이트된 행을 추적
-          // 행 클릭 시 웹페이지 데이터 처리
           // 행 클릭 시 웹페이지 데이터 처리 로직 개선
           $('#csvTable tbody').on('click', 'tr', function() {
             var tr = $(this); // 클릭된 행
@@ -242,7 +246,7 @@
             } else {
               // 링크 행이 숨겨진 경우, 표시
               var rowData = row.data();
-              var linkHtml = '<a href="' + rowData[2] + '" target="_blank">' + rowData[2] + '</a>';
+              var linkHtml = '<a href="' + rowData[2] + '" target="_blank">[접수 링크: ' + rowData[1] + ']</a>';
               row.child(linkHtml).show();
               tr.addClass('highlighted').next().addClass('highlighted'); // 현재 행과 링크 행에 스타일 적용
             }

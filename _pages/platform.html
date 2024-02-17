@@ -7,7 +7,7 @@ permalink: /platform/
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI 데이터분석 공모전 플랫폼</title>
+  <title>&#127894; AI 데이터분석 공모전 플랫폼</title>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.semanticui.min.css">
   <style>
@@ -51,7 +51,7 @@ permalink: /platform/
 
 </head>
 <body>
-  <h2><strong>AI 데이터분석 공모전 플랫폼</strong></h2>
+  <h2><strong>&#127919; AI 데이터분석 공모전 플랫폼</strong></h2>
   <br><br>
   <h3>[수시] AI 데이터분석 공모전 플랫폼</h2>
   <div>
@@ -91,25 +91,26 @@ permalink: /platform/
             "theme": "semanticui" 
           });
 
-          // 유형 컬럼 필터링
-          table.column(0).every(function() {
-            var column = this;
-            var select = $('<select><option value="">전체</option></select>')
-              .appendTo($("#csvTable thead tr:eq(0) th:eq(0)"))
-              .on('change', function() {
-                var val = $.fn.dataTable.util.escapeRegex(
-                  $(this).val()
-                );
+        // 유형 컬럼 필터링 - 콤보박스로 변경
+        table.column(0).every(function() {
+          var column = this;
+          var select = $('<select><option value="">유형</option></select>') // 텍스트 없는 콤보박스
+            .appendTo($(column.header()).empty())
+            .on('change', function() {
+              var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+              );
 
-                column
-                  .search(val ? '^' + val + '$' : '', true, false)
-                  .draw();
-              });
-
-            column.data().unique().sort().each(function(d, j) {
-              select.append('<option value="' + d + '">' + d + '</option>');
+              column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
             });
+
+          column.data().unique().sort().each(function(d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>');
           });
+
+        });
         }
       });
     });
@@ -156,25 +157,25 @@ permalink: /platform/
               "theme": "semanticui" 
             });
 
-            // 유형 컬럼 필터링
-            table.column(0).every(function() {
-              var column = this;
-              var select = $('<select><option value="">전체</option></select>')
-                .appendTo($("#csvTable_reg thead tr:eq(0) th:eq(0)"))
-                .on('change', function() {
-                  var val = $.fn.dataTable.util.escapeRegex(
-                    $(this).val()
-                  );
+          // 유형 컬럼 필터링 - 콤보박스로 변경
+          table.column(0).every(function() {
+            var column = this;
+            var select = $('<select><option value="">유형</option></select>') // 텍스트 없는 콤보박스
+              .appendTo($(column.header()).empty())
+              .on('change', function() {
+                var val = $.fn.dataTable.util.escapeRegex(
+                  $(this).val()
+                );
 
-                  column
-                    .search(val ? '^' + val + '$' : '', true, false)
-                    .draw();
-                });
-
-              column.data().unique().sort().each(function(d, j) {
-                select.append('<option value="' + d + '">' + d + '</option>');
+                column
+                  .search(val ? '^' + val + '$' : '', true, false)
+                  .draw();
               });
+
+            column.data().unique().sort().each(function(d, j) {
+              select.append('<option value="' + d + '">' + d + '</option>');
             });
+          });
           }
         });
       });
